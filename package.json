@@ -6,9 +6,8 @@
   "scripts": {
     "start": "npm run build && run-p autobuild serve",
     "serve": "http-server dist/ -c-1 -p 0 -o",
-    "build": "npm run clean && run-p build-images build-other",
+    "build": "npm run clean && run-p build-other",
     "autobuild": "node scripts/autobuild.mjs",
-    "build-images": "node scripts/build-images.mjs",
     "build-other": "node scripts/build-other.mjs",
     "clean": "node scripts/clean.mjs"
   },

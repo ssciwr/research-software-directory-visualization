@@ -4,7 +4,7 @@ import { SVG } from "@svgdotjs/svg.js"; // eslint-disable-line
 import "@svgdotjs/svg.filter.js"; // eslint-disable-line
 import * as Utils from "./utils";
 
-const json_data_url = "fileadmin/templates/iwr_vis/data.json";
+const json_data_url = "data.json";
 
 let sorted_group_indices = [];
 
@@ -355,7 +355,7 @@ function addGroups(
       }
       // small professor name
       group
-        .text(Utils.shortenName(members[i].name, false))
+        .text(members[i].name)
         .x(boxWidth / 2)
         .y(txtTop + padding + 6 / numLines)
         .addClass("iwr-vis-group-item-profname-small")
@@ -366,20 +366,14 @@ function addGroups(
         .hide();
     }
     // large professor name
-    let dy = 0;
-    for (const textLine of Utils.shortenName(members[i].name, true).split(
-      "\n",
-    )) {
-      group
-        .text(textLine)
-        .y(10 + dy)
-        .x(boxWidth / 2)
-        .addClass("iwr-vis-group-item-profname-large")
-        .attr("startOffset", "50%")
-        .attr("text-anchor", "middle")
-        .attr("font-size", "20px");
-      dy += 25;
-    }
+    group
+      .text(members[i].name)
+      .y(10)
+      .x(boxWidth / 2)
+      .addClass("iwr-vis-group-item-profname-large")
+      .attr("startOffset", "50%")
+      .attr("text-anchor", "middle")
+      .attr("font-size", "20px");
     group.size(65, 20);
     group.move(200 - 65 / 2, 200 - 20 / 2);
     addGroupCard(groupContainer, members[i], color, image_base_url);
@@ -455,13 +449,7 @@ function addGroupCard(svg, member, color, image_base_url) {
     y += 13;
   }
   group_card.css({ opacity: 0, visibility: "hidden" });
-  y += 10;
-  group_card
-    .image(image_base_url + member.image)
-    .size(80, 80)
-    .move(160, y)
-    .linkTo(member.website);
-  y += 84;
+  y += 20;
   group_card
     .text(member.name)
     .x(200)

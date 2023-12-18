@@ -1,28 +1,3 @@
-export function shortenName(full_name: string, newline: boolean) {
-  const words = full_name.split(" ");
-  const short_name = [words[0]];
-  for (const word of words.slice(1, -1)) {
-    if (word.slice(-1) === ".") {
-      // title: keep full word
-      short_name.push(word);
-    } else {
-      // optionally add a newline after titles
-      if (newline === true) {
-        short_name.push("\n");
-        newline = false;
-      }
-      // ignore if starts with "("
-      if (word.at(0) != "(") {
-        // name: keep only first initial & add .
-        short_name.push(word[0] + ".");
-      }
-    }
-  }
-  // surname: keep full word
-  short_name.push(words.at(-1));
-  return short_name.join(" ");
-}
-
 export function getFileFromName(full_name: string) {
   // filename is "SURNAME_sw/0.png" with any ' chars first removed from SURNAME
   return full_name.split(" ").at(-1).split("'").join("") + "_sw/0.png";
@@ -51,8 +26,8 @@ export function sorted_indices(
     return array[a][member] < array[b][member]
       ? -1
       : array[a][member] > array[b][member]
-        ? 1
-        : 0;
+      ? 1
+      : 0;
   });
   return indices;
 }
