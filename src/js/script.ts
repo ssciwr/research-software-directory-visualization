@@ -3,6 +3,7 @@
 import { SVG } from "@svgdotjs/svg.js"; // eslint-disable-line
 import "@svgdotjs/svg.filter.js"; // eslint-disable-line
 import * as Utils from "./utils";
+import {getApplicationWeight, getMethodWeight} from "./utils";
 
 const json_data_url = "data.json";
 
@@ -204,6 +205,10 @@ function addSegments(
   width,
   segmentClass,
 ) {
+  if(names.length > 0){
+  }else{
+    names = Object.keys(names);
+  }
   const delta = 360 / (names.length + 1);
   for (let i = 0; i < names.length; i++) {
     const group = svg
@@ -296,7 +301,7 @@ function addGroups(
   image_base_url,
 ) {
   const boxHeight = 60;
-  const boxWidth = 200;
+  const boxWidth = 290;
   const padding = 2;
   for (let i = 0; i < members.length; i++) {
     const groupContainer = svg.group();
@@ -355,7 +360,7 @@ function addGroups(
       }
       // small professor name
       group
-        .text(members[i].name)
+        .text(members[i].group + "\n" + members[i].name)
         .x(boxWidth / 2)
         .y(txtTop + padding + 6 / numLines)
         .addClass("iwr-vis-group-item-profname-small")
@@ -367,7 +372,7 @@ function addGroups(
     }
     // large professor name
     group
-      .text(members[i].name)
+      .text(members[i].group + "\n" + members[i].name)
       .y(10)
       .x(boxWidth / 2)
       .addClass("iwr-vis-group-item-profname-large")
@@ -583,7 +588,7 @@ function addSettings(svg) {
     .attr({ "stroke-width": 0.5 })
     .addClass("iwr-vis-settings-menu-sort-by-prof");
   sort_by_prof
-    .text("professor name")
+    .text("name")
     .x(24)
     .y(28)
     .attr("font-size", "8px")
@@ -635,7 +640,7 @@ function create_iwr_vis(data) {
   // methods
   addSegments(
     svg,
-    "METHODS",
+    "Research Groups",
     data.methods,
     Utils.transpose(method_weights),
     data.method_color,
@@ -646,7 +651,7 @@ function create_iwr_vis(data) {
   // applications
   addSegments(
     svg,
-    "APPLICATIONS",
+    "Field of Study",
     data.applications,
     Utils.transpose(application_weights),
     data.application_color,
@@ -662,5 +667,10 @@ function create_iwr_vis(data) {
 window.onload = function () {
   fetch(json_data_url, { cache: "no-store" })
     .then((response) => response.json())
-    .then((data) => create_iwr_vis(data));
+    .then((data) => {
+      data.members.forEach(function (item){
+        item.method_weights = getMethodWeight(item.group, data.methods);
+        item.application_weights = getApplicationWeight(item.field, data.applications)
+      });
+      create_iwr_vis(data)});
 };

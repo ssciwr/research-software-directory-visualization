@@ -151,3 +151,31 @@ export function nextGroupBoxIndex(
   }
   return { x: x_min, y: p.y + 1 };
 }
+
+
+export function getMethodWeight(group: string, category: string[]){
+  let group_item = group.split("/")
+  let first_upper_letter_group = group_item.map(firstLetter => firstLetter[0].toUpperCase());
+  let first_upper_letter_sub_category,last_upper_letter_sub_category;
+  let method_weight = [0, 0, 0, 0, 0, 0]
+  first_upper_letter_group.forEach(function (value){
+    for(const [i, v] of category.entries()){
+    first_upper_letter_sub_category = v.charAt(0).toUpperCase();
+    last_upper_letter_sub_category = v.charAt(2).toUpperCase();
+    if(value >= first_upper_letter_sub_category && value <= last_upper_letter_sub_category){
+      method_weight[i] = 1;
+    }
+  }
+  });
+  return method_weight;
+}
+
+export function getApplicationWeight(field: string, category: string[]){
+  let field_item = field.match(/(?=\S)[^,]+?(?=\s*(,|$))/g);
+  let application_weight = [0, 0, 0, 0, 0, 0];
+
+  field_item.forEach(function (item){
+    application_weight[Object.values(category).findIndex((e) => e.includes(item))] = 1;
+  });
+  return application_weight;
+}
