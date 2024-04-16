@@ -464,6 +464,34 @@ function addGroupCard(svg, member, color, image_base_url) {
     .attr("font-size", "12px")
     .linkTo(member.website);
   y += 25;
+  let doi_content = ""
+  for (let textLine of member.doi.split("\n")) {
+    if(textLine.includes("&nbsp;")){
+      textLine = textLine.replace("&nbsp;","");
+    }
+    if(textLine.trim().length == 0 ){
+      continue;
+    }
+    doi_content += "DOI:[" + textLine + "]<br>"
+    // group_card
+    //   .text('DOI:['+textLine+']')
+    //   .x(200)
+    //   .y(y)
+    //   .attr("startOffset", "50%")
+    //   .attr("text-anchor", "middle")
+    //   .attr("font-size", "8px")
+    // y += 18;
+  }
+  const doi = group_card.foreignObject(180, 95).attr({x: 110, y: y});
+  doi.add(
+      SVG(
+          '<div xmlns="http://www.w3.org/1999/xhtml" class="iwr-vis-group-card-html">' +
+        doi_content +
+        "</div>",
+      true,
+      ),
+  );
+  y += 18;
   const blurb = group_card.foreignObject(180, 95).attr({ x: 110, y: y });
   blurb.add(
     SVG(
