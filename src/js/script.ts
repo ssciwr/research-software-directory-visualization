@@ -447,10 +447,8 @@ function addGroupCard(svg, member, color, image_base_url) {
       .y(y)
       .attr("startOffset", "50%")
       .attr("text-anchor", "middle")
-      .fill("#0000ff")
       .attr("font-weight", "bold")
       .attr("font-size", "12px")
-      .linkTo(member.website);
     y += 13;
   }
   group_card.css({ opacity: 0, visibility: "hidden" });
@@ -459,10 +457,12 @@ function addGroupCard(svg, member, color, image_base_url) {
     .text(member.name)
     .x(200)
     .y(y)
+      .fill("#0000ff")
     .attr("startOffset", "50%")
     .attr("text-anchor", "middle")
     .attr("font-weight", "bold")
-    .attr("font-size", "12px");
+    .attr("font-size", "12px")
+    .linkTo(member.website);
   y += 25;
   const blurb = group_card.foreignObject(180, 95).attr({ x: 110, y: y });
   blurb.add(

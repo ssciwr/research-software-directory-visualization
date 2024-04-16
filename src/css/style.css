@@ -30,6 +30,8 @@ a.iwr-vis:active {
 .iwr-vis-group-card-html {
   font-size: 6px;
   line-height: 6px;
+  overflow-y:scroll;
+  height: 90px;
 }
 
 .iwr-vis-menu {
