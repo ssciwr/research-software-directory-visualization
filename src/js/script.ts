@@ -465,22 +465,18 @@ function addGroupCard(svg, member, color, image_base_url) {
     .linkTo(member.website);
   y += 25;
   let doi_content = ""
-  for (let textLine of member.doi.split("\n")) {
-    if(textLine.includes("&nbsp;")){
-      textLine = textLine.replace("&nbsp;","");
+  for(let [i,v] of member.doi.split("\n").entries()){
+    if(v.includes("&nbsp;")){
+      v = v.replace("&nbsp;","");
     }
-    if(textLine.trim().length == 0 ){
+    if(v.trim().length == 0 ){
       continue;
     }
-    doi_content += "DOI:[" + textLine + "]<br>"
-    // group_card
-    //   .text('DOI:['+textLine+']')
-    //   .x(200)
-    //   .y(y)
-    //   .attr("startOffset", "50%")
-    //   .attr("text-anchor", "middle")
-    //   .attr("font-size", "8px")
-    // y += 18;
+    if(i % 2 == 0){
+      doi_content += "DOI:[" + v + "]<br>";
+    }else{
+      doi_content += "DOI:[" + v + "] ";
+    }
   }
   const doi = group_card.foreignObject(180, 95).attr({x: 110, y: y});
   doi.add(
