@@ -11,14 +11,15 @@
     "Q-T",
     "U-Z"
   ],
-  "applications": [
-    "Physical Sciences",
-    "Life Sciences",
-    "Computational Sciences",
-    "Language and Text Analysis",
-    "Image and Vision Processing",
-    "Interdisciplinary and Applied Sciences"
-  ],
+  "applications": {
+    "Physical Sciences":["Applied Physics","Astronomy","Astrophysics","Biophysics","Geodesy","Geoscience","Physical Chemistry","Physics"],
+    "Life Sciences":["Biochemistry","Bioinformatics","Biology"],
+    "Computational Sciences":["Complexity Science","Computer Science","Data Science","Machine Learning","Machine learning in thermodynamics","Software Engineering"],
+    "Language and Text Analysis":["Corpus Linguistics","Historical Lexicology","Linked Open Data","Text Edition"],
+    "Image and Vision Processing":["Computer Vision","Image Analysis","Visual Computing"],
+    "Interdisciplinary and Applied Sciences":["Applied Mathematics","Geoinformatics","Social Sciences","Sports Science","Theoretical chemistry","explainable AI"]
+  }
+  ,
   "members": [
     {
       "description": "The semi-analytical model A-SLOTH (Ancient Stars and Local Observables by Tracing Halos) is the first public code that connects the formation of the first stars and galaxies to observables. The model is based on dark matter merger trees that can either be generated based on Extended Press-Schechter theory or that can be imported from dark matter simulations.&nbsp;",
@@ -26,8 +27,6 @@
       "group": "Klessen group",
       "doi": "\n        10.21105/joss.04417\n        10.3847/1538-4357/ac7150\n      ",
       "website": "https://gitlab.com/thartwig/asloth",
-      "method_weights": [0, 0, 1, 0, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 0],
       "name": "A-SLOTH"
     },
     {
@@ -36,8 +35,6 @@
       "group": "Spanier group",
       "doi": "10.1007/978-3-642-23869-7_1",
       "website": "https://www.ita.uni-heidelberg.de/~fspanier/software/acronym.shtml?lang\u2026",
-      "method_weights": [0, 0, 0, 0, 1, 0],
-      "application_weights": [1, 0, 0, 0, 0, 0],
       "name": "ACRONYM"
     },
     {
@@ -46,8 +43,6 @@
       "group": "Spanier group",
       "doi": "\n        &nbsp;10.1016/j.cpc.2018.04.014\n        10.17632/nt79b5nfsc.1\n      ",
       "website": "https://www.ita.uni-heidelberg.de/~fspanier/software/afterlive.shtml?la\u2026",
-      "method_weights": [0, 0, 0, 0, 1, 0],
-      "application_weights": [1, 0, 0, 0, 0, 0],
       "name": "AFTERLIVE"
     },
     {
@@ -56,8 +51,6 @@
       "group": "Dumistrescu group/SSC",
       "doi": "10.31235/osf.io/v8txj",
       "website": "https://github.com/ssciwr/AMMICO",
-      "method_weights": [1, 0, 0, 0, 1, 0],
-      "application_weights": [0, 0, 0, 0, 0, 1],
       "name": "AMMICO"
     },
     {
@@ -66,8 +59,6 @@
       "group": "Nelson group",
       "doi": "10.1093/mnras/sts595",
       "website": "https://github.com/nelson-group/ArepoVTK",
-      "method_weights": [0, 0, 0, 1, 0, 0],
-      "application_weights": [1, 0, 0, 0, 1, 0],
       "name": "ArepoVTK"
     },
     {
@@ -76,8 +67,6 @@
       "group": "Saez-Rodriguez group",
       "doi": "10.1038/s41540-019-0118-z&nbsp;",
       "website": "https://saezlab.github.io/CARNIVAL/",
-      "method_weights": [0, 0, 0, 0, 1, 0],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "CARNIVAL"
     },
     {
@@ -86,8 +75,6 @@
       "group": "Gr\u00e4ter group",
       "doi": "&nbsp;",
       "website": "https://hits-mbm.github.io/conan/",
-      "method_weights": [0, 1, 0, 0, 0, 0],
-      "application_weights": [1, 1, 0, 0, 0, 0],
       "name": "CONAN"
     },
     {
@@ -96,8 +83,6 @@
       "group": "Paech group",
       "doi": "\n        10.5281/zenodo.7953646\n        10.5281/zenodo.7948296\n        10.5281/zenodo.6866299\n        10.5281/zenodo.7958350\n        10.5281/zenodo.7954331\n        10.5281/zenodo.7955051\n      ",
       "website": "https://github.com/cures-hub",
-      "method_weights": [0, 0, 0, 1, 0, 0],
-      "application_weights": [0, 0, 1, 0, 0, 0],
       "name": "ConDec"
     },
     {
@@ -106,8 +91,6 @@
       "group": "Kummer group",
       "doi": "10.1093/bioinformatics/btl485",
       "website": "http://copasi.org/",
-      "method_weights": [0, 0, 1, 0, 0, 0],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "COPASI"
     },
     {
@@ -116,8 +99,6 @@
       "group": "Mapelli group",
       "doi": "\n        10.1093/mnras/stad1860\n        10.1093/mnras/stab280\n      ",
       "website": "https://gitlab.com/Filippo.santoliquido/cosmo_rate_public",
-      "method_weights": [0, 0, 0, 1, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 0],
       "name": "cosmoRate"
     },
     {
@@ -126,8 +107,6 @@
       "group": "Saez-Rodriguez group",
       "doi": "10.1093/bioadv/vbac016",
       "website": "https://saezlab.github.io/decoupleR/",
-      "method_weights": [0, 0, 0, 0, 1, 0],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "decoupleR"
     },
     {
@@ -136,8 +115,6 @@
       "group": "Kanschat group",
       "doi": "\n        10.1515/jnma-2023-0089\n        10.1016/j.camwa.2020.02.022\n      ",
       "website": "https://www.dealii.org/",
-      "method_weights": [0, 0, 1, 0, 0, 0],
-      "application_weights": [0, 0, 1, 0, 0, 1],
       "name": "deal.II"
     },
     {
@@ -146,8 +123,6 @@
       "group": "Bastian group",
       "doi": "10.1016/j.camwa.2020.06.007",
       "website": "https://www.dune-project.org/",
-      "method_weights": [1, 0, 0, 0, 0, 0],
-      "application_weights": [0, 0, 1, 0, 0, 1],
       "name": "DUNE"
     },
     {
@@ -156,8 +131,6 @@
       "group": "Mapelli group",
       "doi": "\n        10.1093/mnras/stac422\n        10.1093/mnras/stab1334\n      ",
       "website": "https://gitlab.com/micmap/fastcluster_open",
-      "method_weights": [0, 0, 0, 1, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 0],
       "name": "FASTCLUSTER"
     },
     {
@@ -166,8 +139,6 @@
       "group": "Tittel group/ALMA project",
       "doi": "&nbsp;",
       "website": "https://gitlab.hadw-bw.de/alma/alma/-/tree/main/fono",
-      "method_weights": [0, 0, 0, 0, 1, 0],
-      "application_weights": [0, 0, 0, 1, 0, 0],
       "name": "FoNo"
     },
     {
@@ -176,8 +147,6 @@
       "group": "Gr\u00e4ter group",
       "doi": "10.1186/2046-1682-6-5",
       "website": "https://github.com/HITS-MBM/gromacs-fda",
-      "method_weights": [0, 1, 0, 0, 0, 0],
-      "application_weights": [1, 1, 0, 0, 0, 0],
       "name": "FDA"
     },
     {
@@ -186,8 +155,6 @@
       "group": "Velten group",
       "doi": "10.1093/bioinformatics/btad183",
       "website": "https://github.com/bioFAM/FISHFactor",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "FISHFactor"
     },
     {
@@ -196,8 +163,6 @@
       "group": "Buck group",
       "doi": "&nbsp;",
       "website": "https://gasoline-code.com/",
-      "method_weights": [1, 0, 0, 0, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 0],
       "name": "GASOLINE"
     },
     {
@@ -206,8 +171,6 @@
       "group": "Astroinformatics (HITS)",
       "doi": "10.1007/s10044-015-0496-9",
       "website": "https://github.com/ngiann/GaussianVariationalInference.jl",
-      "method_weights": [1, 0, 0, 0, 0, 0],
-      "application_weights": [0, 0, 1, 0, 0, 0],
       "name": "GaussianVariationalInference.jl"
     },
     {
@@ -216,8 +179,6 @@
       "group": "Astroinformatics (HITS)",
       "doi": "\n        10.1051/0004-6361/202345932\n        ascl code record ascl:2303.006\n      ",
       "website": "https://github.com/HITS-AIN/GPCC.jl",
-      "method_weights": [1, 0, 0, 0, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 0],
       "name": "GPCC"
     },
     {
@@ -226,8 +187,6 @@
       "group": "Gr\u00e4ter group",
       "doi": "10.1016/j.bpj.2018.11.3126",
       "website": "https://mptg-cbp.github.io/gromaps.html",
-      "method_weights": [0, 1, 0, 0, 0, 0],
-      "application_weights": [1, 1, 0, 0, 0, 0],
       "name": "GROmaps"
     },
     {
@@ -236,8 +195,6 @@
       "group": "Buck group",
       "doi": "10.1093/mnras/sty1022",
       "website": "https://github.com/aobr/gsf",
-      "method_weights": [1, 0, 0, 0, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 0],
       "name": "gsf"
     },
     {
@@ -246,8 +203,6 @@
       "group": "H\u00f6fle group",
       "doi": "\n        10.1016/j.rse.2021.112772\n        10.1109/ACCESS.2022.3211072\n      ",
       "website": "https://github.com/3dgeo-heidelberg/helios",
-      "method_weights": [0, 1, 0, 0, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 1],
       "name": "HELIOS++"
     },
     {
@@ -256,8 +211,6 @@
       "group": "Heuveline group",
       "doi": "10.11588/emclpp.2017.06.42879",
       "website": "http://hiflow3.org/",
-      "method_weights": [0, 1, 0, 0, 0, 0],
-      "application_weights": [0, 0, 1, 0, 0, 1],
       "name": "Hiflow3"
     },
     {
@@ -266,8 +219,6 @@
       "group": "Kanschat group",
       "doi": "10.1051/m2an/2022011",
       "website": "https://github.com/HyperHDG/HyperHDG",
-      "method_weights": [0, 0, 1, 0, 0, 0],
-      "application_weights": [0, 0, 1, 0, 0, 1],
       "name": "HyperHDG"
     },
     {
@@ -276,8 +227,6 @@
       "group": "Kreshuk group/Hamprecht group",
       "doi": "\n        10.1109/ISBI.2011.5872394\n        10.1007/978-3-319-28549-8_8\n      ",
       "website": "https://www.ilastik.org/",
-      "method_weights": [0, 1, 1, 0, 0, 0],
-      "application_weights": [0, 0, 1, 0, 0, 1],
       "name": "ilastik"
     },
     {
@@ -286,8 +235,6 @@
       "group": "Wade group",
       "doi": "10.1021/acs.jcim.9b00485",
       "website": "https://kbbox.h-its.org/toolbox/",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "KBbox"
     },
     {
@@ -296,8 +243,6 @@
       "group": "Gr\u00e4ter group",
       "doi": "10.1021/acs.jctc.9b00786",
       "website": "https://github.com/HITS-MBM/kimmdy",
-      "method_weights": [0, 1, 0, 0, 0, 0],
-      "application_weights": [1, 1, 0, 0, 0, 0],
       "name": "KIMMDY"
     },
     {
@@ -306,8 +251,6 @@
       "group": "Wade group",
       "doi": "10.1021/acs.jctc.6b00101",
       "website": "https://mcm.h-its.org/lrip-riplig/doc/main.html",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "L-RIP / RIPLig"
     },
     {
@@ -316,8 +259,6 @@
       "group": "Saez-Rodriguez group",
       "doi": "10.1038/s41467-022-30755-0",
       "website": "https://liana-py.readthedocs.io/en/latest/",
-      "method_weights": [0, 0, 0, 0, 1, 0],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "LIANA+"
     },
     {
@@ -326,8 +267,6 @@
       "group": "Kreutzer group",
       "doi": "\n        Ancient TL, 30(1), 1-8 (2012)\n        10.5281/zenodo.596252&nbsp;\n      ",
       "website": "https://cran.r-project.org/web/packages/Luminescence/index.html",
-      "method_weights": [0, 0, 1, 0, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 1],
       "name": "Luminescence"
     },
     {
@@ -336,8 +275,6 @@
       "group": "Zipf group",
       "doi": "&nbsp;",
       "website": "https://mapswipe.org/en/",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [1, 0, 0, 0, 0, 1],
       "name": "MapSwipe"
     },
     {
@@ -346,8 +283,6 @@
       "group": "Vendrell group",
       "doi": "\n        10.1016/0009-2614(90)87014-I\n        10.1016/S0370-1573(99)00047-2\n      ",
       "website": "https://www.pci.uni-heidelberg.de/cms/mctdh.html",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [1, 0, 0, 0, 0, 1],
       "name": "MCTDH"
     },
     {
@@ -356,8 +291,6 @@
       "group": "Wade group",
       "doi": "10.1063/5.0019088",
       "website": "https://github.com/HITS-MCM/MD-IFP",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "MD-IFP"
     },
     {
@@ -366,8 +299,6 @@
       "group": "Velten group",
       "doi": "10.1038/s41592-021-01343-9",
       "website": "https://biofam.github.io/MOFA2/MEFISTO.html",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "MEFISTO"
     },
     {
@@ -376,8 +307,6 @@
       "group": "Saez-Rodriguez group",
       "doi": "10.1186/s13059-022-02663-5",
       "website": "https://saezlab.github.io/mistyR/",
-      "method_weights": [0, 0, 0, 0, 1, 0],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "MISTy"
     },
     {
@@ -386,8 +315,6 @@
       "group": "Mapelli group",
       "doi": "\n        10.1093/mnras/stx2123\n        ads bibcode 2023ascl.soft06010G\n      ",
       "website": "https://gitlab.com/micmap/mobse_open",
-      "method_weights": [0, 0, 0, 1, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 0],
       "name": "MOBSE"
     },
     {
@@ -396,8 +323,6 @@
       "group": "Wade group",
       "doi": "\n        10.1093/nar/gkg588\n        10.1016/s0968-0004(99)01412-7\n      ",
       "website": "https://molsurfer.h-its.org/",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "Molsurfer"
     },
     {
@@ -406,8 +331,6 @@
       "group": "Velten group",
       "doi": "\n        10.15252/msb.20178124\n        10.1186/s13059-020-02015-1\n      ",
       "website": "https://biofam.github.io/MOFA2/index.html",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "MOFA"
     },
     {
@@ -416,8 +339,6 @@
       "group": "Zipf group",
       "doi": "&nbsp;",
       "website": "https://heigit.org/big-spatial-data-analytics-en/ohsome/",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [1, 0, 0, 0, 0, 1],
       "name": "ohsome"
     },
     {
@@ -426,8 +347,6 @@
       "group": "Zipf group",
       "doi": "&nbsp;",
       "website": "https://openrouteservice.org/",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [1, 0, 0, 0, 0, 1],
       "name": "Openrouteservice"
     },
     {
@@ -436,8 +355,6 @@
       "group": "Spanier group",
       "doi": "\n        &nbsp;10.1016/j.cpc.2014.11.010,\n        10.17632/gcy5p3ddfb.1\n      ",
       "website": "https://www.ita.uni-heidelberg.de/~fspanier/software/picpanther.shtml?l\u2026",
-      "method_weights": [0, 0, 0, 0, 1, 0],
-      "application_weights": [1, 0, 0, 0, 0, 0],
       "name": "PICPANTHER"
     },
     {
@@ -446,8 +363,6 @@
       "group": "Wade group",
       "doi": "\n        10.1002/(sici)1097-0134(19991115)37:3&lt;379::aid-prot6&gt;3.0.co;2-k\n        10.1002/qua.1204\n        10.1186/1471-2105-8-373\n        10.1093/nar/gkn181\n      ",
       "website": "https://pipsa.h-its.org/pipsa/",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "PIPSA / webPIPSA"
     },
     {
@@ -456,8 +371,6 @@
       "group": "Hamprecht group",
       "doi": "10.7554/eLife.57613",
       "website": "https://github.com/hci-unihd/plant-seg",
-      "method_weights": [0, 1, 0, 0, 0, 0],
-      "application_weights": [0, 1, 1, 0, 1, 0],
       "name": "PlantSeg"
     },
     {
@@ -466,8 +379,6 @@
       "group": "Klessen group",
       "doi": "\n        10.1051/0004-6361/201424930\n        10.1051/0004-6361/201629001\n      ",
       "website": "https://portia.astrophysik.uni-kiel.de/polaris/",
-      "method_weights": [0, 0, 1, 0, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 0],
       "name": "POLARIS"
     },
     {
@@ -476,8 +387,6 @@
       "group": "H\u00f6fle group",
       "doi": "&nbsp;",
       "website": "https://github.com/3dgeo-heidelberg/py4dgeo",
-      "method_weights": [0, 1, 0, 0, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 1],
       "name": "py4dgeo"
     },
     {
@@ -486,8 +395,6 @@
       "group": "Buck group",
       "doi": "\n        ascl code record ascl:1305.002\n        10.1093/mnras/stt788\n      ",
       "website": "https://pynbody.github.io/",
-      "method_weights": [1, 0, 0, 0, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 0],
       "name": "pynbody"
     },
     {
@@ -496,8 +403,6 @@
       "group": "H\u00f6fle group",
       "doi": "10.5281/zenodo.7551310",
       "website": "https://github.com/3dgeo-heidelberg/pytreedb",
-      "method_weights": [0, 1, 0, 0, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 1],
       "name": "pytreedb"
     },
     {
@@ -506,8 +411,6 @@
       "group": "Kreutzer group",
       "doi": "Ancient TL, 37(2), 1-8 (2019)",
       "website": "https://cran.r-project.org/web/packages/RCarb/index.html",
-      "method_weights": [0, 0, 1, 0, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 1],
       "name": "RCarb"
     },
     {
@@ -516,8 +419,6 @@
       "group": "Dullemond group",
       "doi": "ads bibcode 2012ascl.soft02015D",
       "website": "https://www.ita.uni-heidelberg.de/~dullemond/software/radmc-3d/index.php",
-      "method_weights": [1, 0, 0, 0, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 0],
       "name": "RADMC-3D"
     },
     {
@@ -526,8 +427,6 @@
       "group": "Wade group",
       "doi": "\n        10.1006/jmbi.2000.4154\n        10.1007/s008940050053\n        10.1021/acs.jctc.8b00230\n        10.3389/fmolb.2019.00036\n      ",
       "website": "https://www.h-its.org/downloads/ramd/",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "RAMD"
     },
     {
@@ -536,8 +435,6 @@
       "group": "Wade group",
       "doi": "https://doi.org/10.26434/chemrxiv.12636704.v2",
       "website": "https://github.com/HITS-MCM/RASPDplus",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [0, 1, 1, 0, 0, 0],
       "name": "RASPD+"
     },
     {
@@ -546,8 +443,6 @@
       "group": "Kreutzer group",
       "doi": "10.32614/RJ-2021-043",
       "website": "https://cran.r-project.org/web/packages/RLumCarlo/index.html",
-      "method_weights": [0, 0, 1, 0, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 1],
       "name": "RLumCarlo"
     },
     {
@@ -556,8 +451,6 @@
       "group": "Kreutzer group",
       "doi": "&nbsp;",
       "website": "https://cran.r-project.org/web/packages/rxylib/index.html",
-      "method_weights": [0, 0, 1, 0, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 1],
       "name": "rxylib"
     },
     {
@@ -566,8 +459,6 @@
       "group": "Herzog group",
       "doi": "&nbsp;",
       "website": "https://pypi.org/project/scoop-template-engine/",
-      "method_weights": [0, 1, 0, 0, 0, 0],
-      "application_weights": [0, 1, 0, 1, 0, 1],
       "name": "SCOOP template engine"
     },
     {
@@ -576,8 +467,6 @@
       "group": "Wade group",
       "doi": "\n        10.1002/jcc.23971\n        10.1006/meth.1998.0588\n        10.1016/S0006-3495(97)78838-6\n      ",
       "website": "https://mcm.h-its.org/sda/doc/doc_sda7/index.html",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "SDA / webSDA"
     },
     {
@@ -586,8 +475,6 @@
       "group": "Mapelli group",
       "doi": "\n        &nbsp;10.1093/mnras/stad1630\n        10.3847/1538-4357/ab584d\n      ",
       "website": "https://gitlab.com/sevncodes/sevn",
-      "method_weights": [0, 0, 0, 1, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 0],
       "name": "SEVN"
     },
     {
@@ -596,8 +483,6 @@
       "group": "Zipf group",
       "doi": "&nbsp;",
       "website": "https://github.com/GIScience/sketch-map-tool",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [1, 0, 0, 0, 0, 1],
       "name": "Sketch Map Tool"
     },
     {
@@ -606,8 +491,6 @@
       "group": "Kummer group",
       "doi": "10.5281/zenodo.8316368",
       "website": "https://spatial-model-editor.github.io/",
-      "method_weights": [0, 0, 1, 0, 0, 0],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "Spatial Model Editor"
     },
     {
@@ -616,8 +499,6 @@
       "group": "Wade group",
       "doi": "10.1093/bioinformatics/btn207",
       "website": "http://sycamore.h-its.org/sycamore/",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "SYCAMORE"
     },
     {
@@ -626,8 +507,6 @@
       "group": "Herzog group/Viktor Martinek",
       "doi": "10.48550/arXiv.2309.02805, 10.5281/zenodo.8317547",
       "website": "https://github.com/scoop-group/TiSR",
-      "method_weights": [0, 1, 0, 0, 0, 1],
-      "application_weights": [0, 0, 1, 0, 0, 1],
       "name": "TiSR"
     },
     {
@@ -636,8 +515,6 @@
       "group": "Wade group",
       "doi": "10.1021/acs.jcim.9b01185",
       "website": "https://trapp.h-its.org/",
-      "method_weights": [0, 0, 0, 0, 0, 1],
-      "application_weights": [0, 1, 0, 0, 0, 0],
       "name": "TRAPP"
     },
     {
@@ -646,8 +523,6 @@
       "group": "Spanier group",
       "doi": "\n        &nbsp;10.1051/0004-6361/201424159\n        10.1016/j.astropartphys.2018.02.008\n      ",
       "website": "https://www.ita.uni-heidelberg.de/~fspanier/software/unicorn.shtml?lang\u2026",
-      "method_weights": [1, 0, 0, 0, 0, 0],
-      "application_weights": [0, 0, 0, 0, 1, 0],
       "name": "UNICORN"
     },
     {
@@ -656,8 +531,6 @@
       "group": "H\u00f6fle group",
       "doi": "10.11588/data/QNA02B",
       "website": "https://github.com/3dgeo-heidelberg/vostok",
-      "method_weights": [0, 1, 0, 0, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 1],
       "name": "VOSTOK"
     },
     {
@@ -666,8 +539,6 @@
       "group": "Wanner group/SSC",
       "doi": "&nbsp;",
       "website": "https://github.com/ssciwr/vstt",
-      "method_weights": [0, 0, 0, 0, 1, 1],
-      "application_weights": [0, 0, 0, 0, 0, 1],
       "name": "VSTT"
     },
     {
@@ -676,8 +547,6 @@
       "group": "Kreutzer group",
       "doi": "10.5194/gchron-5-271-2023",
       "website": "https://doi.org/10.5281/zenodo.7362363",
-      "method_weights": [0, 0, 1, 0, 0, 0],
-      "application_weights": [1, 0, 0, 0, 0, 1],
       "name": "XLUM"
     }
   ]
