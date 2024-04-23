@@ -265,7 +265,7 @@ function addSegments(
     add.polyline([0, 0, 4, 2, 0, 4]).fill(color).stroke("none");
   });
   const txtAngle = 4 + label.length / 2;
-  const arrowPadding = 3;
+  const arrowPadding = 4;
   groupLabel
     .path(
       Utils.makeArrowArc(
@@ -472,22 +472,18 @@ function addGroupCard(svg, member, color, image_base_url) {
     if(v.trim().length == 0 ){
       continue;
     }
-    if(i % 2 == 0){
-      doi_content += "DOI:[" + v + "]<br>";
-    }else{
-      doi_content += "DOI:[" + v + "] ";
-    }
+    doi_content += "DOI:[" + v + "]<br>";
   }
-  const doi = group_card.foreignObject(180, 95).attr({x: 110, y: y});
+  const doi = group_card.foreignObject(180, 20).attr({x: 110, y: y});
   doi.add(
       SVG(
-          '<div xmlns="http://www.w3.org/1999/xhtml" class="iwr-vis-group-card-html">' +
+          '<div xmlns="http://www.w3.org/1999/xhtml" class="iwr-vis-group-card-doi">' +
         doi_content +
         "</div>",
       true,
       ),
   );
-  y += 18;
+  y += 28;
   const blurb = group_card.foreignObject(180, 95).attr({ x: 110, y: y });
   blurb.add(
     SVG(
@@ -612,7 +608,7 @@ function addSettings(svg) {
     .attr({ "stroke-width": 0.5 })
     .addClass("iwr-vis-settings-menu-sort-by-prof");
   sort_by_prof
-    .text("name")
+    .text("software name")
     .x(24)
     .y(28)
     .attr("font-size", "8px")
