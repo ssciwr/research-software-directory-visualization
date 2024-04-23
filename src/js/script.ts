@@ -476,22 +476,28 @@ function addGroupCard(svg, member, color, image_base_url) {
   }
   const doi = group_card.foreignObject(180, 20).attr({x: 110, y: y});
   doi.add(
-      SVG(
-          '<div xmlns="http://www.w3.org/1999/xhtml" class="iwr-vis-group-card-doi">' +
-        doi_content +
-        "</div>",
-      true,
-      ),
+    SVG(
+        '<div xmlns="http://www.w3.org/1999/xhtml" class="iwr-vis-group-card-doi">' +
+        '<div class="card overflow-auto" style="width: 100%; height: 100%;scrollbar-width: thin;">' +
+        '<div class="card-body p-1">' +
+        '<p class="card-text">'+ doi_content + '</p>' +
+        "</div>" +
+        "</div>" +
+        "</div>"
+    , true),
   );
   y += 28;
   const blurb = group_card.foreignObject(180, 95).attr({ x: 110, y: y });
   blurb.add(
     SVG(
-      '<div xmlns="http://www.w3.org/1999/xhtml" class="iwr-vis-group-card-html">' +
-        member.description +
-        "</div>",
-      true,
-    ),
+        '<div xmlns="http://www.w3.org/1999/xhtml" class="iwr-vis-group-card-html">' +
+        '<div class="card overflow-auto" style="width: 100%; height: 100%;scrollbar-width: thin;">' +
+        '<div class="card-body p-1">' +
+        '<p class="card-text">'+ member.description + '</p>' +
+        "</div>" +
+        "</div>" +
+        "</div>"
+    , true),
   );
 }
 
