@@ -478,25 +478,18 @@ function addGroupCard(svg, member, color, image_base_url) {
       doi_content += "DOI:[" + v + "] ";
     }
   }
-  const doi = group_card.foreignObject(180, 95).attr({x: 110, y: y});
-  doi.add(
+  const blurb = group_card.foreignObject(180, 100).attr({ x: 110, y: y });
+  blurb.add(
       SVG(
           '<div xmlns="http://www.w3.org/1999/xhtml" class="iwr-vis-group-card-html">' +
-        doi_content +
-        "</div>",
-      true,
-      ),
-  );
-  y += 18;
-  const blurb = group_card.foreignObject(180, 95).attr({ x: 110, y: y });
-  blurb.add(
-    SVG(
-      '<div xmlns="http://www.w3.org/1999/xhtml" class="iwr-vis-group-card-html">' +
-        member.description +
-        "</div>",
-      true,
-    ),
-  );
+          '<div class="card" style="width: 100%; height: 100%;">' +
+          '<div class="card-body overflow-auto">' +
+          '<p>'+ member.description + '</p>' +
+          "</div>" +
+          "</div>" +
+          "</div>"
+      , true),
+    );
 }
 
 const zoomGroups = function (e) {
