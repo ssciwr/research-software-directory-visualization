@@ -474,9 +474,10 @@ function addGroupCard(svg, member, color, image_base_url) {
     }
     doi_content += "DOI:[" + v + "]<br>";
   }
-  const doi = group_card.foreignObject(180, 20).attr({x: 110, y: y});
-  doi.add(
-    SVG(
+  if(doi_content.trim()!==""){
+    const doi = group_card.foreignObject(180, 20).attr({x: 110, y: y});
+    doi.add(
+      SVG(
         '<div xmlns="http://www.w3.org/1999/xhtml" class="iwr-vis-group-card-doi">' +
         '<div class="card overflow-auto" style="width: 100%; height: 100%;scrollbar-width: thin;">' +
         '<div class="card-body p-1">' +
@@ -484,9 +485,11 @@ function addGroupCard(svg, member, color, image_base_url) {
         "</div>" +
         "</div>" +
         "</div>"
-    , true),
-  );
-  y += 28;
+      , true),
+    );
+    y += 28;
+  }
+
   const blurb = group_card.foreignObject(180, 95).attr({ x: 110, y: y });
   blurb.add(
     SVG(
