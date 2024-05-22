@@ -3,21 +3,35 @@ name: Build and deploy to gh-pages
 on: push
 
 jobs:
-  build-and-deploy:
-    name: Build and deploy
+  build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
-      - run: npm install
-      - run: npm run build
-      - uses: JamesIves/github-pages-deploy-action@v4
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        name: Deploy to gh-pages
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm run build
+      - uses: actions/upload-pages-artifact@v3
         with:
-          branch: gh-pages
-          folder: dist
-          single-commit: true
+          path: "dist/"
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment

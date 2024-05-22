@@ -10,14 +10,11 @@ The data used to generate it can be edited at [ssciwr/research-software-director
 
 Implemented in javascript and SVG using [svg.js](https://svgjs.dev/)
 
-## Online preview
+## Deployment
 
-On every commit to the main branch:
+On every commit to the main branch, the [deploy.yml](https://github.com/ssciwr/research-software-directory-visualization/actions/workflows/deploy.yml) action builds website & deploys to gh-pages at [ssciwr.github.io/research-software-directory-visualization](https://ssciwr.github.io/research-software-directory-visualization/)
 
-- [deploy.yml](https://github.com/ssciwr/research-software-directory-visualization/actions/workflows/deploy.yml) action builds website & deploys to the [gh-pages](https://github.com/ssciwr/research-software-directory-visualization/tree/gh-pages) branch
-- github pages hosts these files at [ssciwr.github.io/research-software-directory-visualization](https://ssciwr.github.io/research-software-directory-visualization/)
-
-## How to build and view locally
+## How to build and edit locally
 
 Initial setup:
 
@@ -27,14 +24,12 @@ Initial setup:
 - (optional) install pre-commit to auto-format code
   - `pip install pre-commit`
   - `pre-commit install`
-- install node
-  - macOS: `brew install node`
-  - windows: https://nodejs.org/en/
-  - ubuntu: `sudo apt install nodejs npm`
-  - conda: `conda install nodejs -c conda-forge`
-- install website node dependencies
-  - `npm install`
+- install [pnpm](https://pnpm.io/installation)
+  - windows: `iwr https://get.pnpm.io/install.ps1 -useb | iex`
+  - linux/macOS: `curl -fsSL https://get.pnpm.io/install.sh | sh -`
+- install website dependencies
+  - `pnpm install`
 
 To build from source, start local http-server, open website in browser, monitor & re-build modified source files:
 
-- `npm start`
+- `pnpm start`
