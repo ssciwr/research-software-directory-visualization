@@ -5,7 +5,7 @@ import "@svgdotjs/svg.filter.js"; // eslint-disable-line
 import * as Utils from "./utils";
 import {getApplicationWeight, getMethodWeight} from "./utils";
 
-const json_data_url = "data.json";
+const json_data_url = "https://raw.githubusercontent.com/ssciwr/research-software-directory/main/generated/data.json";
 
 let sorted_group_indices = [];
 
@@ -294,7 +294,7 @@ function addSegments(
 
 function addGroups(
   svg,
-  members,
+  projects,
   method_weights,
   application_weights,
   color,
@@ -303,7 +303,7 @@ function addGroups(
   const boxHeight = 60;
   const boxWidth = 290;
   const padding = 2;
-  for (let i = 0; i < members.length; i++) {
+  for (let i = 0; i < projects.length; i++) {
     const groupContainer = svg.group();
     const group = groupContainer.group().addClass("iwr-vis-group-item");
     group.on("mouseenter", highlightSegments);
@@ -336,7 +336,7 @@ function addGroups(
       .filterWith(shadowFilter);
     if (show_groups === true) {
       // group name
-      const numLines = countLines(members[i].group);
+      const numLines = countLines(projects[i].group);
       let txtTop = 0;
       const dy = 11;
       if (numLines === 1) {
@@ -344,7 +344,7 @@ function addGroups(
       } else if (numLines === 2) {
         txtTop = 4;
       }
-      for (const textLine of members[i].group.split("\n")) {
+      for (const textLine of projects[i].group.split("\n")) {
         group
           .text(textLine)
           .addClass("iwr-vis-group-item-groupname")
@@ -360,7 +360,7 @@ function addGroups(
       }
       // small professor name
       group
-        .text(members[i].group + "\n" + members[i].name)
+        .text(projects[i].group + "\n" + projects[i].name)
         .x(boxWidth / 2)
         .y(txtTop + padding + 6 / numLines)
         .addClass("iwr-vis-group-item-profname-small")
@@ -372,7 +372,7 @@ function addGroups(
     }
     // large professor name
     group
-      .text(members[i].group + "\n" + members[i].name)
+      .text(projects[i].group + "\n" + projects[i].name)
       .y(10)
       .x(boxWidth / 2)
       .addClass("iwr-vis-group-item-profname-large")
@@ -381,7 +381,7 @@ function addGroups(
       .attr("font-size", "20px");
     group.size(65, 20);
     group.move(200 - 65 / 2, 200 - 20 / 2);
-    addGroupCard(groupContainer, members[i], color, image_base_url);
+    addGroupCard(groupContainer, projects[i], color, image_base_url);
   }
 }
 
@@ -392,7 +392,7 @@ const hideGroupCard = function () {
   SVG("#iwr-vis-menu-svg").find(".iwr-vis-group-item").show();
 };
 
-function addGroupCard(svg, member, color, image_base_url) {
+function addGroupCard(svg, project, color, image_base_url) {
   const group_card = svg.group().addClass("iwr-vis-group-card");
   const card_size = 210;
   const bg_circle = group_card
@@ -440,7 +440,7 @@ function addGroupCard(svg, member, color, image_base_url) {
   bg_circle.click(hideGroupCard);
   close_button.click(hideGroupCard);
   let y = 99;
-  for (const textLine of member.group.split("\n")) {
+  for (const textLine of project.group.split("\n")) {
     group_card
       .text(textLine)
       .x(200)
@@ -454,7 +454,7 @@ function addGroupCard(svg, member, color, image_base_url) {
   group_card.css({ opacity: 0, visibility: "hidden" });
   y += 20;
   group_card
-    .text(member.name)
+    .text(project.name)
     .x(200)
     .y(y)
       .fill("#0000ff")
@@ -462,17 +462,11 @@ function addGroupCard(svg, member, color, image_base_url) {
     .attr("text-anchor", "middle")
     .attr("font-weight", "bold")
     .attr("font-size", "12px")
-    .linkTo(member.website);
+    .linkTo(project.website);
   y += 25;
   let doi_content = ""
-  for(let [i,v] of member.doi.split("\n").entries()){
-    if(v.includes("&nbsp;")){
-      v = v.replace("&nbsp;","");
-    }
-    if(v.trim().length == 0 ){
-      continue;
-    }
-    doi_content += "DOI:[" + v + "]<br>";
+  for(const doi of project.doi){
+    doi_content += "DOI:[" + doi + "]<br>";
   }
   if(doi_content.trim()!==""){
     const doi = group_card.foreignObject(180, 20).attr({x: 110, y: y});
@@ -496,7 +490,7 @@ function addGroupCard(svg, member, color, image_base_url) {
         '<div xmlns="http://www.w3.org/1999/xhtml" class="iwr-vis-group-card-html">' +
         '<div class="card overflow-auto" style="width: 100%; height: 100%;scrollbar-width: thin;">' +
         '<div class="card-body p-1">' +
-        '<p class="card-text">'+ member.description + '</p>' +
+        '<p class="card-text">'+ project.description + '</p>' +
         "</div>" +
         "</div>" +
         "</div>"
@@ -631,7 +625,7 @@ function addSettings(svg) {
 }
 
 function create_iwr_vis(data) {
-  sorted_group_indices = Utils.sorted_indices(data.members, "group");
+  sorted_group_indices = Utils.sorted_indices(data.projects, "group");
   show_groups = data.show_groups;
   const svg = SVG("#iwr-vis-menu-svg") as SVG.Container;
   // background
@@ -647,12 +641,12 @@ function create_iwr_vis(data) {
     .stroke("none");
   svg.on("wheel", zoomGroups);
 
-  // create array of weights from member data
+  // create array of weights from project data
   const method_weights = [];
   const application_weights = [];
-  for (const member of data.members) {
-    method_weights.push(member.method_weights);
-    application_weights.push(member.application_weights);
+  for (const project of data.projects) {
+    method_weights.push(project.method_weights);
+    application_weights.push(project.application_weights);
   }
 
   // groups
@@ -660,7 +654,7 @@ function create_iwr_vis(data) {
   groups.clipWith(inner_circle);
   addGroups(
     groups,
-    data.members,
+    data.projects,
     method_weights,
     application_weights,
     data.group_color,
@@ -697,7 +691,27 @@ window.onload = function () {
   fetch(json_data_url, { cache: "no-store" })
     .then((response) => response.json())
     .then((data) => {
-      data.members.forEach(function (item){
+      data.group_color = "#ffffff";
+      data.method_color = "#e13535";
+      data.application_color = "#499bce";
+      data.show_group_names = false;
+      data.methods = [
+        "A-D",
+        "E-H",
+        "I-L",
+        "M-P",
+        "Q-T",
+        "U-Z"
+      ];
+      data.applications = {
+        "Physical Sciences":["Applied Physics","Astronomy","Astrophysics","Biophysics","Geodesy","Geoscience","Physical Chemistry","Physics"],
+        "Life Sciences":["Biochemistry","Bioinformatics","Biology"],
+        "Computational Sciences":["Complexity Science","Computer Science","Data Science","Machine Learning","Machine learning in thermodynamics","Software Engineering"],
+        "Language and Text Analysis":["Corpus Linguistics","Historical Lexicology","Linked Open Data","Text Edition"],
+        "Image and Vision Processing":["Computer Vision","Image Analysis","Visual Computing"],
+        "Interdisciplinary and Applied Sciences":["Applied Mathematics","Geoinformatics","Social Sciences","Sports Science","Theoretical chemistry","explainable AI"]
+      }
+      data.projects.forEach(function (item){
         item.method_weights = getMethodWeight(item.group, data.methods);
         item.application_weights = getApplicationWeight(item.field, data.applications)
       });

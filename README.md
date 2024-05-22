@@ -2,18 +2,13 @@
 
 [![Build and deploy to gh-pages](https://github.com/ssciwr/research-software-directory-visualization/actions/workflows/deploy.yml/badge.svg)](https://github.com/ssciwr/research-software-directory-visualization/actions/workflows/deploy.yml)
 
-# Work in progress!
+An interactive visualization of the [SSC Research Software Directory](https://www.ssc.uni-heidelberg.de/en/research-software-directory)
 
-Prototype of an interactive visualization of the [SSC Research Software Directory](https://www.ssc.uni-heidelberg.de/en/research-software-directory)
+The data used to generate it can be edited at [ssciwr/research-software-directory/data.yml](https://github.com/ssciwr/research-software-directory/blob/main/data.yml)
 
 ## Overview
 
 Implemented in javascript and SVG using [svg.js](https://svgjs.dev/)
-
-- [main](https://github.com/ssciwr/research-software-directory-visualization/tree/main) branch contains the source code
-  - contents can be edited in [src/data/data.json](src/data/data.json)
-- [gh-pages](https://github.com/ssciwr/research-software-directory-visualization/tree/gh-pages) branch contains the generated website
-- uses [npm](https://www.npmjs.com/) and [webpack](https://webpack.js.org/) to manage the build and dependencies
 
 ## Online preview
 

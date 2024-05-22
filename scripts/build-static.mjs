@@ -6,5 +6,4 @@ export function buildStatic() {
   fs.mkdirSync("./dist", { recursive: true });
   shell.cp("./src/html/index.html", "./dist/.");
   shell.cp("./src/css/style.css", "./dist/.");
-  shell.cp("./src/data/data.json", "./dist/.");
 }
