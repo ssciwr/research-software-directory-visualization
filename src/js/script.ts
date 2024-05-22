@@ -3,9 +3,10 @@
 import { SVG } from "@svgdotjs/svg.js"; // eslint-disable-line
 import "@svgdotjs/svg.filter.js"; // eslint-disable-line
 import * as Utils from "./utils";
-import {getApplicationWeight, getMethodWeight} from "./utils";
+import { getApplicationWeight, getMethodWeight } from "./utils";
 
-const json_data_url = "https://raw.githubusercontent.com/ssciwr/research-software-directory/main/generated/data.json";
+const json_data_url =
+  "https://raw.githubusercontent.com/ssciwr/research-software-directory/main/generated/data.json";
 
 let sorted_group_indices = [];
 
@@ -205,8 +206,8 @@ function addSegments(
   width,
   segmentClass,
 ) {
-  if(names.length > 0){
-  }else{
+  if (names.length > 0) {
+  } else {
     names = Object.keys(names);
   }
   const delta = 360 / (names.length + 1);
@@ -448,7 +449,7 @@ function addGroupCard(svg, project, color, image_base_url) {
       .attr("startOffset", "50%")
       .attr("text-anchor", "middle")
       .attr("font-weight", "bold")
-      .attr("font-size", "12px")
+      .attr("font-size", "12px");
     y += 13;
   }
   group_card.css({ opacity: 0, visibility: "hidden" });
@@ -457,29 +458,34 @@ function addGroupCard(svg, project, color, image_base_url) {
     .text(project.name)
     .x(200)
     .y(y)
-      .fill("#0000ff")
+    .fill("#0000ff")
     .attr("startOffset", "50%")
     .attr("text-anchor", "middle")
     .attr("font-weight", "bold")
     .attr("font-size", "12px")
     .linkTo(project.website);
   y += 25;
-  let doi_content = ""
-  for(const doi of project.doi){
-    doi_content += "DOI:[" + doi + "]<br>";
+  let doi_content = "";
+  for (const doi of project.doi) {
+    if (doi !== "") {
+      doi_content += `<a href='https://doi.org/${doi}'>${doi}</a> `;
+    }
   }
-  if(doi_content.trim()!==""){
-    const doi = group_card.foreignObject(180, 20).attr({x: 110, y: y});
+  if (doi_content.trim() !== "") {
+    const doi = group_card.foreignObject(180, 20).attr({ x: 110, y: y });
     doi.add(
       SVG(
         '<div xmlns="http://www.w3.org/1999/xhtml" class="iwr-vis-group-card-doi">' +
-        '<div class="card overflow-auto" style="width: 100%; height: 100%;scrollbar-width: thin;">' +
-        '<div class="card-body p-1">' +
-        '<p class="card-text">'+ doi_content + '</p>' +
-        "</div>" +
-        "</div>" +
-        "</div>"
-      , true),
+          '<div class="card overflow-auto" style="width: 100%; height: 100%;scrollbar-width: thin;">' +
+          '<div class="card-body p-1">' +
+          '<p class="card-text">DOI: ' +
+          doi_content +
+          "</p>" +
+          "</div>" +
+          "</div>" +
+          "</div>",
+        true,
+      ),
     );
     y += 28;
   }
@@ -487,14 +493,17 @@ function addGroupCard(svg, project, color, image_base_url) {
   const blurb = group_card.foreignObject(180, 95).attr({ x: 110, y: y });
   blurb.add(
     SVG(
-        '<div xmlns="http://www.w3.org/1999/xhtml" class="iwr-vis-group-card-html">' +
+      '<div xmlns="http://www.w3.org/1999/xhtml" class="iwr-vis-group-card-html">' +
         '<div class="card overflow-auto" style="width: 100%; height: 100%;scrollbar-width: thin;">' +
         '<div class="card-body p-1">' +
-        '<p class="card-text">'+ project.description + '</p>' +
+        '<p class="card-text">' +
+        project.description +
+        "</p>" +
         "</div>" +
         "</div>" +
-        "</div>"
-    , true),
+        "</div>",
+      true,
+    ),
   );
 }
 
@@ -695,25 +704,54 @@ window.onload = function () {
       data.method_color = "#e13535";
       data.application_color = "#499bce";
       data.show_group_names = false;
-      data.methods = [
-        "A-D",
-        "E-H",
-        "I-L",
-        "M-P",
-        "Q-T",
-        "U-Z"
-      ];
+      data.methods = ["A-D", "E-H", "I-L", "M-P", "Q-T", "U-Z"];
       data.applications = {
-        "Physical Sciences":["Applied Physics","Astronomy","Astrophysics","Biophysics","Geodesy","Geoscience","Physical Chemistry","Physics"],
-        "Life Sciences":["Biochemistry","Bioinformatics","Biology"],
-        "Computational Sciences":["Complexity Science","Computer Science","Data Science","Machine Learning","Machine learning in thermodynamics","Software Engineering"],
-        "Language and Text Analysis":["Corpus Linguistics","Historical Lexicology","Linked Open Data","Text Edition"],
-        "Image and Vision Processing":["Computer Vision","Image Analysis","Visual Computing"],
-        "Interdisciplinary and Applied Sciences":["Applied Mathematics","Geoinformatics","Social Sciences","Sports Science","Theoretical chemistry","explainable AI"]
-      }
-      data.projects.forEach(function (item){
+        "Physical Sciences": [
+          "Applied Physics",
+          "Astronomy",
+          "Astrophysics",
+          "Biophysics",
+          "Geodesy",
+          "Geoscience",
+          "Physical Chemistry",
+          "Physics",
+        ],
+        "Life Sciences": ["Biochemistry", "Bioinformatics", "Biology"],
+        "Computational Sciences": [
+          "Complexity Science",
+          "Computer Science",
+          "Data Science",
+          "Machine Learning",
+          "Machine learning in thermodynamics",
+          "Software Engineering",
+        ],
+        "Language and Text Analysis": [
+          "Corpus Linguistics",
+          "Historical Lexicology",
+          "Linked Open Data",
+          "Text Edition",
+        ],
+        "Image and Vision Processing": [
+          "Computer Vision",
+          "Image Analysis",
+          "Visual Computing",
+        ],
+        "Interdisciplinary and Applied Sciences": [
+          "Applied Mathematics",
+          "Geoinformatics",
+          "Social Sciences",
+          "Sports Science",
+          "Theoretical chemistry",
+          "explainable AI",
+        ],
+      };
+      data.projects.forEach(function (item) {
         item.method_weights = getMethodWeight(item.group, data.methods);
-        item.application_weights = getApplicationWeight(item.field, data.applications)
+        item.application_weights = getApplicationWeight(
+          item.field,
+          data.applications,
+        );
       });
-      create_iwr_vis(data)});
+      create_iwr_vis(data);
+    });
 };
