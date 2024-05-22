@@ -178,10 +178,12 @@ export function getApplicationWeight(field: string, category: string[]) {
   let field_item = field.match(/(?=\S)[^,]+?(?=\s*(,|$))/g);
   let application_weight = [0, 0, 0, 0, 0, 0];
 
-  field_item.forEach(function (item) {
-    application_weight[
-      Object.values(category).findIndex((e) => e.includes(item))
-    ] = 1;
-  });
+  if (field_item !== null) {
+    field_item.forEach(function (item) {
+      application_weight[
+        Object.values(category).findIndex((e) => e.includes(item))
+      ] = 1;
+    });
+  }
   return application_weight;
 }
