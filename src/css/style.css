@@ -1,12 +1,25 @@
 body {
-  margin: 0;
+  margin: 0 auto;
+  min-height: 100%;
+  min-width: 100%;
+  background: #fff
+    url("https://drupal-varnish-703-urz-webkit-webkit39-prd.apps.ocp-west.urz.uni-heidelberg.de/sites/default/files/site_logo/WEB%20Kopfgrafik%20Scientific-Software-Center%20LANG%20neu.svg")
+    no-repeat right 1vmin top 1vmin;
+  background-size: auto 10vmin;
+}
+
+.header {
+  text-align: center;
+  position: top;
+  width: 100%;
+  height: 5vmin;
 }
 
 .iwr-vis {
   position: relative;
   margin: 0 auto;
-  width: 100vmin;
-  height: 100vmin;
+  width: 95vmin;
+  height: 95vmin;
   background: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
 }
