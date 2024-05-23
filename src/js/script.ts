@@ -8,12 +8,15 @@ const json_data_url =
   "https://raw.githubusercontent.com/ssciwr/research-software-directory/main/generated/data.json";
 
 let sorted_group_indices = [];
-
+let disable_zoom = false;
 const method_anim_ms = 1000;
 const num_outer_rings = 2;
 
 // this state can be modified by the user
 let sort_by_group = false;
+let zoom_factor = 1;
+let zoom_cx = Utils.cx;
+let zoom_cy = Utils.cy;
 
 const updateSegments = function () {
   for (const group_card of SVG("#iwr-vis-menu-svg").find(
@@ -49,13 +52,8 @@ const updateSegments = function () {
   }
 };
 
-function updateGroups(
-  groups: List<Element>,
-  show_all = false,
-  zoom = 1,
-  cx = Utils.cx,
-  cy = Utils.cy,
-) {
+function updateGroups(groups: List<Element>, show_all = false) {
+  disable_zoom = false;
   updateSegments();
   const items = SVG("#iwr-vis-menu-svg").find(".iwr-vis-group-item");
   if (groups != null) {
@@ -73,7 +71,7 @@ function updateGroups(
     }
   }
   let ncols = 2;
-  let scaleFactor = 0.43 * zoom;
+  let scaleFactor = 0.43 * zoom_factor;
   if (nGroups > 12) {
     ncols = 3;
   }
@@ -82,13 +80,13 @@ function updateGroups(
     ncols = 4;
     groupBoxIndex.x = 1;
     nrows = Math.floor((nGroups + 10 + (ncols - 1)) / ncols);
-    scaleFactor = (4.3 / nrows) * zoom;
+    scaleFactor = (4.3 / nrows) * zoom_factor;
   }
   // todo: add 5 cols layout
   const width = Utils.sx * 0.5 * scaleFactor;
   const height = Utils.sy * 0.15 * scaleFactor;
-  const x0 = cx - (width * ncols) / 2;
-  const y0 = cy - (height * nrows) / 2;
+  const x0 = zoom_cx - (width * ncols) / 2;
+  const y0 = zoom_cy - (height * nrows) / 2;
   for (let i0 = 0; i0 < items.length; i0++) {
     let i = i0;
     if (sort_by_group) {
@@ -119,6 +117,7 @@ const resetAll = function () {
     .find(".iwr-vis-segment-item")
     .addClass("hovered")
     .removeClass("selected");
+  resetZoom();
   updateGroups(null);
 };
 
@@ -131,6 +130,7 @@ const selectSegment = function () {
     segments.removeClass("hovered");
     segments.removeClass("selected");
     this.addClass("selected");
+    resetZoom();
     updateGroups(this.data("groups"));
   }
 };
@@ -290,14 +290,7 @@ function addSegments(
     .marker("end", arrow);
 }
 
-function addGroups(
-  svg,
-  projects,
-  method_weights,
-  application_weights,
-  color,
-  image_base_url,
-) {
+function addGroups(svg, projects, method_weights, application_weights, color) {
   const boxHeight = 60;
   const boxWidth = 290;
   for (let i = 0; i < projects.length; i++) {
@@ -317,6 +310,7 @@ function addGroups(
       transition: "opacity 0.6s, visibility 0.6s",
     });
     group.click(function () {
+      disable_zoom = true;
       this.addClass("frozenSegments");
       SVG("#iwr-vis-menu-svg").find(".iwr-vis-group-item").hide();
       this.parent()
@@ -343,7 +337,7 @@ function addGroups(
       .attr("text-anchor", "middle");
     group.size(65, 20);
     group.move(Utils.cx - 65 / 2, Utils.cy - 20 / 2);
-    addGroupCard(groupContainer, projects[i], color, image_base_url);
+    addGroupCard(groupContainer, projects[i], color);
   }
 }
 
@@ -455,26 +449,32 @@ function addGroupCard(svg, project, color) {
   );
 }
 
+function resetZoom() {
+  zoom_factor = 1.0;
+  zoom_cx = Utils.cx;
+  zoom_cy = Utils.cy;
+}
+
 const zoomGroups = function (e) {
-  // only zoom in/out if all groups are displayed
+  // only zoom in/out if not disabled, and all groups are displayed
   const segments = SVG("#iwr-vis-menu-svg").find(".iwr-vis-segment-item");
   const nHovered = segments.hasClass("hovered").filter(Boolean).length;
-  if (nHovered != segments.length) {
+  if (disable_zoom || nHovered != segments.length) {
     return;
   }
   const p = this.point(e.clientX, e.clientY);
-  const z = 2;
-  if (e.deltaY < 0) {
-    updateGroups(
-      null,
-      true,
-      z,
-      Utils.cx + (1 - z) * (p.x - Utils.cx),
-      Utils.cy + (1 - z) * (p.y - Utils.cy),
-    );
-  } else {
-    updateGroups(null, true);
+  const max_zoom = 3.0;
+  const min_zoom = 1.0;
+  zoom_factor -= e.deltaY;
+  if (zoom_factor > max_zoom) {
+    zoom_factor = max_zoom;
   }
+  if (zoom_factor < min_zoom) {
+    zoom_factor = min_zoom;
+  }
+  zoom_cx = Utils.cx + (1 - zoom_factor) * (p.x - Utils.cx);
+  zoom_cy = Utils.cy + (1 - zoom_factor) * (p.y - Utils.cy);
+  updateGroups(null, true);
 };
 
 const sortGroupsByProf = function () {
@@ -577,7 +577,6 @@ function create_iwr_vis(data) {
     method_weights,
     application_weights,
     data.group_color,
-    data.image_base_url,
   );
   // methods
   addSegments(
