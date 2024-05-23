@@ -98,7 +98,8 @@ function updateGroups(groups: List<Element>, show_all = false) {
   } else {
     height = height_over_width * width;
   }
-
+  width = width * zoom_factor;
+  height = height * zoom_factor;
   const x0 = zoom_cx - (width * ncols) / 2;
   const y0 = zoom_cy - (height * nrows) / 2;
   for (let i0 = 0; i0 < items.length; i0++) {
@@ -374,6 +375,7 @@ const hideGroupCard = function () {
   card.parent().findOne(".iwr-vis-group-item").removeClass("frozenSegments");
   card.css({ opacity: 0, visibility: "hidden" });
   SVG("#iwr-vis-menu-svg").find(".iwr-vis-group-item").show();
+  disable_zoom = false;
 };
 
 function addGroupCard(svg, project, color) {
