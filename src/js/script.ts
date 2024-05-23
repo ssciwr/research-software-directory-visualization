@@ -82,7 +82,12 @@ function updateGroups(groups: List<Element>, show_all = false) {
     nrows = Math.floor((nGroups + 10 + (ncols - 1)) / ncols);
     scaleFactor = (4.3 / nrows) * zoom_factor;
   }
-  // todo: add 5 cols layout
+  if (nGroups > 31) {
+    ncols = 5;
+    groupBoxIndex.x = 1;
+    nrows = Math.floor((nGroups + 10 + (ncols - 1)) / ncols);
+    scaleFactor = (4.0 / nrows) * zoom_factor;
+  }
   const width = Utils.sx * 0.5 * scaleFactor;
   const height = Utils.sy * 0.15 * scaleFactor;
   const x0 = zoom_cx - (width * ncols) / 2;

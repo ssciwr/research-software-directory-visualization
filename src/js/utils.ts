@@ -132,10 +132,10 @@ export function nextGroupBoxIndex(
 ) {
   let x_max = ncols - 1;
   let x_min = 0;
-  if (ncols === 4) {
-    // first 2, last 3 have 2 columns
+  if (ncols >= 4) {
+    // first 2, last 3 don't have outer two columns
     if (p.y <= 1 || p.y >= nrows - 4) {
-      x_max = 2;
+      x_max = ncols - 2;
       x_min = 1;
     }
     if (p.y === 1) {
