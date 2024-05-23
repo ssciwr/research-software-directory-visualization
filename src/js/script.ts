@@ -13,7 +13,6 @@ const method_anim_ms = 1000;
 const num_outer_rings = 2;
 
 // this state can be modified by the user
-let show_groups = true;
 let sort_by_group = false;
 
 const updateSegments = function () {
@@ -73,11 +72,6 @@ function updateGroups(
       }
     }
   }
-  if (show_groups === true) {
-    items.find(".iwr-vis-group-item-groupname").show();
-    items.find(".iwr-vis-group-item-profname-small").show();
-    items.find(".iwr-vis-group-item-profname-large").hide();
-  }
   let ncols = 2;
   let scaleFactor = 0.43 * zoom;
   if (nGroups > 12) {
@@ -89,11 +83,6 @@ function updateGroups(
     groupBoxIndex.x = 1;
     nrows = Math.floor((nGroups + 10 + (ncols - 1)) / ncols);
     scaleFactor = (4.3 / nrows) * zoom;
-    if (show_groups === true) {
-      items.find(".iwr-vis-group-item-groupname").hide();
-      items.find(".iwr-vis-group-item-profname-small").hide();
-      items.find(".iwr-vis-group-item-profname-large").show();
-    }
   }
   // todo: add 5 cols layout
   const width = Utils.sx * 0.5 * scaleFactor;
@@ -552,7 +541,6 @@ function addSettings(svg) {
 
 function create_iwr_vis(data) {
   sorted_group_indices = Utils.sorted_indices(data.projects, "group");
-  show_groups = data.show_groups;
   const svg = SVG("#iwr-vis-menu-svg") as SVG.Container;
   // background
   const bg_group = svg.group().addClass("iwr-vis-bg");
