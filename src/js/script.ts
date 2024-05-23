@@ -71,25 +71,34 @@ function updateGroups(groups: List<Element>, show_all = false) {
     }
   }
   let ncols = 2;
-  let scaleFactor = 0.43 * zoom_factor;
   if (nGroups > 12) {
     ncols = 3;
   }
-  let nrows = Math.floor((nGroups + (ncols - 1)) / ncols);
+  let nMissingGroups = 0;
   if (nGroups > 21) {
     ncols = 4;
+    // we skip outer columns for first 2 & last 3 rows = 10 missing groups from grid
+    // see Utils.nextGroupBoxIndex()
+    nMissingGroups = 10;
     groupBoxIndex.x = 1;
-    nrows = Math.floor((nGroups + 10 + (ncols - 1)) / ncols);
-    scaleFactor = (4.3 / nrows) * zoom_factor;
+    if (nGroups > 31) {
+      ncols = 5;
+    }
   }
-  if (nGroups > 31) {
-    ncols = 5;
-    groupBoxIndex.x = 1;
-    nrows = Math.floor((nGroups + 10 + (ncols - 1)) / ncols);
-    scaleFactor = (4.0 / nrows) * zoom_factor;
+  const nrows = Math.floor((nGroups + nMissingGroups + (ncols - 1)) / ncols);
+  const height_over_width = 0.3;
+  const max_width = 0.25 * Utils.sx;
+  let width = (0.66 * Utils.sx) / ncols;
+  if (width > max_width) {
+    width = max_width;
   }
-  const width = Utils.sx * 0.5 * scaleFactor;
-  const height = Utils.sy * 0.15 * scaleFactor;
+  let height = (0.66 * Utils.sx) / nrows;
+  if (height_over_width * width > height) {
+    width = height / height_over_width;
+  } else {
+    height = height_over_width * width;
+  }
+
   const x0 = zoom_cx - (width * ncols) / 2;
   const y0 = zoom_cy - (height * nrows) / 2;
   for (let i0 = 0; i0 < items.length; i0++) {
