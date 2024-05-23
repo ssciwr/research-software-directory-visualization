@@ -1,11 +1,9 @@
-export function getFileFromName(full_name: string) {
-  // filename is "SURNAME_sw/0.png" with any ' chars first removed from SURNAME
-  return full_name.split(" ").at(-1).split("'").join("") + "_sw/0.png";
-}
-
-export function countLines(str: string) {
-  return (str.match(/\n/g) || "").length + 1;
-}
+// set overall size and center point of svg in pixels
+const svg_size_pixels = 1200;
+export const sx = svg_size_pixels;
+export const sy = svg_size_pixels;
+export const cx = sx / 2;
+export const cy = sy / 2;
 
 // https://stackoverflow.com/a/36164530/6465472
 export function transpose<T>(m: T[][]) {
@@ -36,8 +34,8 @@ export function sorted_indices(
 function xy(radius: number, deg: number) {
   const rad = ((deg - 90) * Math.PI) / 180.0;
   return {
-    x: 200 + radius * Math.cos(rad),
-    y: 200 + radius * Math.sin(rad),
+    x: cx + radius * Math.cos(rad),
+    y: cy + radius * Math.sin(rad),
   };
 }
 
@@ -48,10 +46,11 @@ export function makeTextArc(
   endAngle: number,
 ) {
   const anticlockwise = startAngle > 70 && endAngle < 290;
+  // slight adjustment to vertically center text within segment
   if (anticlockwise) {
-    radius = radius + 2;
+    radius = radius * 1.01;
   } else {
-    radius = radius - 3;
+    radius = radius * 0.985;
   }
   const p0 = xy(radius, startAngle);
   const p1 = xy(radius, endAngle);

@@ -27,18 +27,6 @@ a.iwr-vis:active {
   text-decoration: none;
 }
 
-.iwr-vis-group-card-html {
-  font-size: 6px;
-  line-height: 6px;
-  height: 90px;
-}
-
-.iwr-vis-group-card-doi {
-  font-size: 6px;
-  line-height: 6px;
-  height: 20px;
-}
-
 .iwr-vis-menu {
   position: absolute;
   left: 0;
@@ -61,4 +49,9 @@ a.iwr-vis:active {
 
 .iwr-vis-group-item:hover .iwr-vis-group-item-box {
   fill: #cccccc;
+}
+
+.iwr-vis-group-card-html {
+  width: 100%;
+  height: 100%;
 }

@@ -1,9 +1,8 @@
 // @ts-nocheck
 
-import { SVG } from "@svgdotjs/svg.js"; // eslint-disable-line
+import { List, SVG } from "@svgdotjs/svg.js"; // eslint-disable-line
 import "@svgdotjs/svg.filter.js"; // eslint-disable-line
 import * as Utils from "./utils";
-import { getApplicationWeight, getMethodWeight } from "./utils";
 
 const json_data_url =
   "https://raw.githubusercontent.com/ssciwr/research-software-directory/main/generated/data.json";
@@ -11,8 +10,10 @@ const json_data_url =
 let sorted_group_indices = [];
 
 const method_anim_ms = 1000;
+const num_outer_rings = 2;
 
-let show_groups = false;
+// this state can be modified by the user
+let show_groups = true;
 let sort_by_group = false;
 
 const updateSegments = function () {
@@ -31,7 +32,9 @@ const updateSegments = function () {
     if (segment.hasClass("selected")) {
       segment.css({ opacity: "1", filter: "grayscale(0)" });
       segment.findOne(".iwr-vis-segment-item-text").attr("fill", "#ffffff");
-      segment.findOne(".iwr-vis-segment-item-arc").attr("stroke-width", 0.5);
+      segment
+        .findOne(".iwr-vis-segment-item-arc")
+        .attr("stroke-width", Utils.sx / 800);
     } else if (segment.hasClass("hovered")) {
       segment.css({ opacity: "1", filter: "grayscale(0)" });
       segment.findOne(".iwr-vis-segment-item-arc").attr("stroke-width", 0);
@@ -51,8 +54,8 @@ function updateGroups(
   groups: List<Element>,
   show_all = false,
   zoom = 1,
-  cx = 200,
-  cy = 200,
+  cx = Utils.cx,
+  cy = Utils.cy,
 ) {
   updateSegments();
   const items = SVG("#iwr-vis-menu-svg").find(".iwr-vis-group-item");
@@ -92,8 +95,9 @@ function updateGroups(
       items.find(".iwr-vis-group-item-profname-large").show();
     }
   }
-  const width = 200 * scaleFactor;
-  const height = 60 * scaleFactor;
+  // todo: add 5 cols layout
+  const width = Utils.sx * 0.5 * scaleFactor;
+  const height = Utils.sy * 0.15 * scaleFactor;
   const x0 = cx - (width * ncols) / 2;
   const y0 = cy - (height * nrows) / 2;
   for (let i0 = 0; i0 < items.length; i0++) {
@@ -152,7 +156,9 @@ const hoverSegment = function () {
   }
   if (!this.hasClass("selected")) {
     this.findOne(".iwr-vis-segment-item-text").fill("#ffffff");
-    this.findOne(".iwr-vis-segment-item-arc").attr({ "stroke-width": 0.5 });
+    this.findOne(".iwr-vis-segment-item-arc").attr({
+      "stroke-width": Utils.sx / 800,
+    });
   }
 };
 
@@ -193,7 +199,7 @@ const highlightSegments = function () {
 };
 
 const shadowFilter = function (add) {
-  add.blend(add.$source, add.gaussianBlur(1).in(add.$sourceAlpha));
+  add.blend(add.$source, add.gaussianBlur(Utils.sx / 600).in(add.$sourceAlpha));
 };
 
 function addSegments(
@@ -202,14 +208,15 @@ function addSegments(
   names,
   groups,
   color,
-  radius,
-  width,
+  ringIndex,
   segmentClass,
 ) {
   if (names.length > 0) {
   } else {
     names = Object.keys(names);
   }
+  const width = Utils.sx / 40;
+  const radius = Utils.sx / 2 - width * (1 + 2 * ringIndex);
   const delta = 360 / (names.length + 1);
   for (let i = 0; i < names.length; i++) {
     const group = svg
@@ -244,7 +251,7 @@ function addSegments(
       .addClass("iwr-vis-segment-item-text")
       .attr("startOffset", "50%")
       .attr("text-anchor", "middle")
-      .attr("font-size", "8.8px");
+      .attr("font-size", `${0.88 * width}px`);
   }
   // label
   const groupLabel = svg.group();
@@ -255,41 +262,42 @@ function addSegments(
     .path(Utils.makeTextArc(radius, -delta / 2, delta / 2))
     .fill("none")
     .stroke("none");
-  labelPath
+  const labelPathText = labelPath
     .text(label)
     .attr("startOffset", "50%")
     .attr("text-anchor", "middle")
-    .attr("font-size", "10.56px")
+    .attr("font-size", `${1.056 * width}px`)
     .attr("fill", color)
     .attr("font-weight", "bold");
   const arrow = groupLabel.marker(4, 4, function (add) {
     add.polyline([0, 0, 4, 2, 0, 4]).fill(color).stroke("none");
   });
-  const txtAngle = 4 + label.length / 2;
-  const arrowPadding = 4;
+  const circumference = 6.28318530718 * radius;
+  const txtExtentDegrees = (360 * labelPathText.length()) / circumference;
+  const arrowPaddingDegrees = 2;
   groupLabel
     .path(
       Utils.makeArrowArc(
         radius,
-        arrowPadding + txtAngle,
-        delta / 2 - arrowPadding,
+        txtExtentDegrees / 2 + arrowPaddingDegrees,
+        delta / 2 - arrowPaddingDegrees,
       ),
     )
     .fill("none")
     .stroke(color)
-    .attr({ "stroke-width": 2 })
+    .attr({ "stroke-width": Utils.sx / 200 })
     .marker("end", arrow);
   groupLabel
     .path(
       Utils.makeArrowArc(
         radius,
-        -arrowPadding - txtAngle,
-        -delta / 2 + arrowPadding,
+        -txtExtentDegrees / 2 - arrowPaddingDegrees,
+        -delta / 2 + arrowPaddingDegrees,
       ),
     )
     .fill("none")
     .stroke(color)
-    .attr({ "stroke-width": 2 })
+    .attr({ "stroke-width": Utils.sx / 200 })
     .marker("end", arrow);
 }
 
@@ -303,7 +311,6 @@ function addGroups(
 ) {
   const boxHeight = 60;
   const boxWidth = 290;
-  const padding = 2;
   for (let i = 0; i < projects.length; i++) {
     const groupContainer = svg.group();
     const group = groupContainer.group().addClass("iwr-vis-group-item");
@@ -335,53 +342,18 @@ function addGroups(
       .stroke("none")
       .addClass("iwr-vis-group-item-box")
       .filterWith(shadowFilter);
-    if (show_groups === true) {
-      // group name
-      const numLines = countLines(projects[i].group);
-      let txtTop = 0;
-      const dy = 11;
-      if (numLines === 1) {
-        txtTop = 10;
-      } else if (numLines === 2) {
-        txtTop = 4;
-      }
-      for (const textLine of projects[i].group.split("\n")) {
-        group
-          .text(textLine)
-          .addClass("iwr-vis-group-item-groupname")
-          .x(boxWidth / 2)
-          .y(txtTop)
-          .attr("startOffset", "50%")
-          .attr("text-anchor", "middle")
-          .fill("#0000ff")
-          .attr("font-weight", "bold")
-          .attr("font-size", "12px")
-          .hide();
-        txtTop += dy;
-      }
-      // small professor name
-      group
-        .text(projects[i].group + "\n" + projects[i].name)
-        .x(boxWidth / 2)
-        .y(txtTop + padding + 6 / numLines)
-        .addClass("iwr-vis-group-item-profname-small")
-        .attr("startOffset", "50%")
-        .attr("text-anchor", "middle")
-        .attr("font-weight", "bold")
-        .attr("font-size", "12px")
-        .hide();
-    }
     // large professor name
     group
       .text(projects[i].group + "\n" + projects[i].name)
-      .y(10)
-      .x(boxWidth / 2)
       .addClass("iwr-vis-group-item-profname-large")
       .attr("startOffset", "50%")
-      .attr("text-anchor", "middle")
-      .attr("font-size", "20px");
+      .attr("dominant-baseline", "middle")
+      .attr("font-size", `${boxHeight / 3}px`)
+      .y(boxHeight / 10)
+      .x(boxWidth / 2)
+      .attr("text-anchor", "middle");
     group.size(65, 20);
-    group.move(200 - 65 / 2, 200 - 20 / 2);
+    group.move(Utils.cx - 65 / 2, Utils.cy - 20 / 2);
     addGroupCard(groupContainer, projects[i], color, image_base_url);
   }
 }
@@ -393,27 +365,27 @@ const hideGroupCard = function () {
   SVG("#iwr-vis-menu-svg").find(".iwr-vis-group-item").show();
 };
 
-function addGroupCard(svg, project, color, image_base_url) {
+function addGroupCard(svg, project, color) {
   const group_card = svg.group().addClass("iwr-vis-group-card");
-  const card_size = 210;
+  const card_size = Utils.sx / 2;
   const bg_circle = group_card
-    .circle(316)
-    .cx(200)
-    .cy(200)
+    .circle(Utils.sx * (1 - num_outer_rings / 10))
+    .cx(Utils.cx)
+    .cy(Utils.cy)
     .fill("#ffffff")
     .stroke("none");
   group_card
     .rect(card_size, card_size)
-    .cx(200)
-    .cy(200)
+    .cx(Utils.cx)
+    .cy(Utils.cy)
     .fill(color)
     .stroke("none")
     .filterWith(shadowFilter);
-  const close_button_size = 6;
-  const close_button_padding = 3;
+  const close_button_size = Utils.sx * 0.015;
+  const close_button_padding = close_button_size / 2;
   const close_button_x =
-    200 + card_size / 2 - close_button_size - close_button_padding;
-  const close_button_y = 200 - card_size / 2 + close_button_padding;
+    Utils.cx + card_size / 2 - close_button_size - close_button_padding;
+  const close_button_y = Utils.cx - card_size / 2 + close_button_padding;
   const close_button = group_card.group().addClass("iwr-vis-clickable");
   close_button
     .rect(close_button_size, close_button_size)
@@ -440,65 +412,52 @@ function addGroupCard(svg, project, color, image_base_url) {
     .attr({ "stroke-width": 0.5 });
   bg_circle.click(hideGroupCard);
   close_button.click(hideGroupCard);
-  let y = 99;
-  for (const textLine of project.group.split("\n")) {
-    group_card
-      .text(textLine)
-      .x(200)
-      .y(y)
-      .attr("startOffset", "50%")
-      .attr("text-anchor", "middle")
-      .attr("font-weight", "bold")
-      .attr("font-size", "12px");
-    y += 13;
-  }
-  group_card.css({ opacity: 0, visibility: "hidden" });
-  y += 20;
+  const group_title_height = card_size / 20;
+  let current_y = Utils.cy - card_size / 2;
+  current_y += 1.2 * group_title_height;
+  group_card
+    .text(project.group)
+    .attr("startOffset", "50%")
+    .attr("dominant-baseline", "middle")
+    .attr("font-weight", "bold")
+    .attr("font-size", `${group_title_height}px`)
+    .x(Utils.cx)
+    .y(current_y)
+    .attr("text-anchor", "middle");
+  const project_title_height = card_size / 16;
+  current_y += 1.5 * project_title_height;
   group_card
     .text(project.name)
-    .x(200)
-    .y(y)
     .fill("#0000ff")
     .attr("startOffset", "50%")
-    .attr("text-anchor", "middle")
+    .attr("dominant-baseline", "middle")
     .attr("font-weight", "bold")
-    .attr("font-size", "12px")
+    .attr("font-size", `${project_title_height}px`)
+    .x(Utils.cx)
+    .y(current_y)
+    .attr("text-anchor", "middle")
     .linkTo(project.website);
-  y += 25;
-  let doi_content = "";
+  current_y += 2 * project_title_height;
+  group_card.css({ opacity: 0, visibility: "hidden" });
+  const html_card_width = 0.85 * card_size;
+  const html_card_height = 0.85 * (card_size / 2 + Utils.cy - current_y);
+  const html_card = group_card
+    .foreignObject(html_card_width, html_card_height)
+    .attr({ x: Utils.cx - html_card_width / 2, y: current_y });
+  let doi_content = '<ul class="list-group border-0 rounded-0">';
   for (const doi of project.doi) {
     if (doi !== "") {
-      doi_content += `<a href='https://doi.org/${doi}'>${doi}</a> `;
+      doi_content += `<li class="list-group-item border-0 rounded-0"><a href='https://doi.org/${doi}'>${doi}</a></li>`;
     }
   }
-  if (doi_content.trim() !== "") {
-    const doi = group_card.foreignObject(180, 20).attr({ x: 110, y: y });
-    doi.add(
-      SVG(
-        '<div xmlns="http://www.w3.org/1999/xhtml" class="iwr-vis-group-card-doi">' +
-          '<div class="card overflow-auto" style="width: 100%; height: 100%;scrollbar-width: thin;">' +
-          '<div class="card-body p-1">' +
-          '<p class="card-text">DOI: ' +
-          doi_content +
-          "</p>" +
-          "</div>" +
-          "</div>" +
-          "</div>",
-        true,
-      ),
-    );
-    y += 28;
-  }
-
-  const blurb = group_card.foreignObject(180, 95).attr({ x: 110, y: y });
-  blurb.add(
+  doi_content += "</ul>";
+  html_card.add(
     SVG(
       '<div xmlns="http://www.w3.org/1999/xhtml" class="iwr-vis-group-card-html">' +
-        '<div class="card overflow-auto" style="width: 100%; height: 100%;scrollbar-width: thin;">' +
-        '<div class="card-body p-1">' +
-        '<p class="card-text">' +
-        project.description +
-        "</p>" +
+        '<div class="card overflow-auto border-0 rounded-0" style="width: 100%; height: 100%;">' +
+        '<div class="card-body">' +
+        `<p class="card-text fs-5">${project.description}</p>` +
+        doi_content +
         "</div>" +
         "</div>" +
         "</div>",
@@ -521,11 +480,11 @@ const zoomGroups = function (e) {
       null,
       true,
       z,
-      200 + (1 - z) * (p.x - 200),
-      200 + (1 - z) * (p.y - 200),
+      Utils.cx + (1 - z) * (p.x - Utils.cx),
+      Utils.cy + (1 - z) * (p.y - Utils.cy),
     );
   } else {
-    updateGroups(null, true, 1, 200, 200);
+    updateGroups(null, true);
   }
 };
 
@@ -551,86 +510,44 @@ const sortGroupsByProf = function () {
 function addSettings(svg) {
   const line_color = "#777777";
   const bg_color = "#ffffff";
-  const width = 100;
-  const height = 60;
-  const padding = 4;
-  const radius = 2;
-  const settings = svg.group().addClass("iwr-vis-settings-menu");
-  settings.on("mouseenter", function () {
-    this.findOne(".iwr-vis-settings-menu-large").show();
-  });
-  settings.on("mouseleave", function () {
-    this.findOne(".iwr-vis-settings-menu-large").hide();
-  });
-  // button
-  const settings_button = settings
-    .group()
-    .addClass("iwr-vis-settings-menu-button");
-  settings_button
-    .rect(16, 16)
-    .radius(radius)
-    .stroke(line_color)
-    .fill(bg_color)
-    .attr({ "stroke-width": 0.5 });
-  settings_button.line(4, 12, 12, 12).attr({ "stroke-width": 0.5 });
-  settings_button.line(4, 8, 12, 8).attr({ "stroke-width": 0.5 });
-  settings_button.line(4, 4, 12, 4).attr({ "stroke-width": 0.5 });
-  settings_button.stroke(line_color).fill("none").attr({ "stroke-width": 0.5 });
-  settings_button.move(400 - 16 - padding, padding);
-  // menu
-  const settings_menu = settings
-    .group()
-    .addClass("iwr-vis-settings-menu-large");
-  settings_menu
-    .rect(width, height)
-    .radius(radius)
-    .stroke(line_color)
-    .fill(bg_color)
-    .attr({ "stroke-width": 0.5 });
+  const padding = Utils.sx / 200;
+  const font_size = Utils.sx / 75;
+  const settings_menu = svg.group().addClass("iwr-vis-settings-menu-large");
   // group sorting options
-  settings_menu
-    .text("Sort by")
-    .x(6)
-    .y(0)
-    .attr("font-size", "8px")
-    .fill(line_color);
   const sort_by_group = settings_menu.group().addClass("iwr-vis-clickable");
   sort_by_group
-    .rect(8, 8)
+    .rect(font_size, font_size)
     .radius(1)
     .stroke(line_color)
     .fill(bg_color)
-    .move(12, 24)
+    .move(font_size, font_size)
     .attr({ "stroke-width": 0.5 })
     .addClass("iwr-vis-settings-menu-sort-by-group");
   sort_by_group
-    .text("group name")
-    .x(24)
-    .y(16)
-    .attr("font-size", "8px")
-    .fill(line_color);
+    .text("Sort by group name")
+    .attr("dominant-baseline", "middle")
+    .attr("font-size", `${font_size}px`)
+    .fill(line_color)
+    .x(2 * font_size + padding)
+    .y(font_size);
   sort_by_group.click(sortGroupsByProf);
   const sort_by_prof = settings_menu.group().addClass("iwr-vis-clickable");
   sort_by_prof
-    .rect(8, 8)
+    .rect(font_size, font_size)
     .radius(1)
     .stroke(line_color)
     .fill(line_color)
-    .move(12, 24 + 12)
+    .move(font_size, 3 * font_size)
     .attr({ "stroke-width": 0.5 })
     .addClass("iwr-vis-settings-menu-sort-by-prof");
   sort_by_prof
-    .text("software name")
-    .x(24)
-    .y(28)
-    .attr("font-size", "8px")
-    .fill(line_color);
+    .text("Sort by software name")
+    .attr("dominant-baseline", "middle")
+    .attr("font-size", `${font_size}px`)
+    .fill(line_color)
+    .x(2 * font_size + padding)
+    .y(3 * font_size);
   sort_by_prof.click(sortGroupsByProf);
-  settings_menu.transform({
-    translateX: 400 - width - padding,
-    translateY: padding,
-  });
-  settings_menu.hide();
 }
 
 function create_iwr_vis(data) {
@@ -640,12 +557,17 @@ function create_iwr_vis(data) {
   // background
   const bg_group = svg.group().addClass("iwr-vis-bg");
   bg_group.click(resetAll);
-  bg_group.rect(400, 400).cx(200).cy(200).fill("#ffffff").stroke("#ffffff");
+  bg_group
+    .rect(Utils.sx, Utils.sy)
+    .cx(Utils.cx)
+    .cy(Utils.cy)
+    .fill("#ffffff")
+    .stroke("#ffffff");
 
   const inner_circle = svg
-    .circle(316)
-    .cx(200)
-    .cy(200)
+    .circle(Utils.sx * (1.0 - num_outer_rings / 10))
+    .cx(Utils.cx)
+    .cy(Utils.cy)
     .fill("none")
     .stroke("none");
   svg.on("wheel", zoomGroups);
@@ -676,8 +598,7 @@ function create_iwr_vis(data) {
     data.methods,
     Utils.transpose(method_weights),
     data.method_color,
-    168,
-    10,
+    1,
     "iwr-vis-method-item",
   );
   // applications
@@ -687,8 +608,7 @@ function create_iwr_vis(data) {
     data.applications,
     Utils.transpose(application_weights),
     data.application_color,
-    188,
-    10,
+    0,
     "iwr-vis-application-item",
   );
   resetAll();
@@ -746,8 +666,8 @@ window.onload = function () {
         ],
       };
       data.projects.forEach(function (item) {
-        item.method_weights = getMethodWeight(item.group, data.methods);
-        item.application_weights = getApplicationWeight(
+        item.method_weights = Utils.getMethodWeight(item.group, data.methods);
+        item.application_weights = Utils.getApplicationWeight(
           item.field,
           data.applications,
         );
