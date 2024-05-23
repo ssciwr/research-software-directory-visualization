@@ -206,7 +206,8 @@ function addSegments(
   }
   const width = Utils.sx / 40;
   const radius = Utils.sx / 2 - width * (1 + 2 * ringIndex);
-  const delta = 360 / (names.length + 1);
+  const delta_title = 25;
+  const delta = (360 - 2 * delta_title) / names.length;
   for (let i = 0; i < names.length; i++) {
     const group = svg
       .group()
@@ -224,7 +225,12 @@ function addSegments(
     });
     group
       .path(
-        Utils.makeSegment(radius, (i + 0.5) * delta, (i + 1.5) * delta, width),
+        Utils.makeSegment(
+          radius,
+          delta_title + i * delta,
+          delta_title + (i + 1) * delta,
+          width,
+        ),
       )
       .addClass("iwr-vis-segment-item-arc")
       .fill(color)
@@ -232,7 +238,13 @@ function addSegments(
       .attr("stroke-width", 0)
       .filterWith(shadowFilter);
     const strPath = group
-      .path(Utils.makeTextArc(radius, (i + 0.5) * delta, (i + 1.5) * delta))
+      .path(
+        Utils.makeTextArc(
+          radius,
+          delta_title + i * delta,
+          delta_title + (i + 1) * delta,
+        ),
+      )
       .fill("none")
       .stroke("none");
     strPath
@@ -245,10 +257,12 @@ function addSegments(
   // label
   const groupLabel = svg.group();
   groupLabel
-    .path(Utils.makeSegment(radius, -delta / 2.05, delta / 2.05, width))
+    .path(
+      Utils.makeSegment(radius, -delta_title / 1.02, delta_title / 1.02, width),
+    )
     .fill("#ffffff");
   const labelPath = groupLabel
-    .path(Utils.makeTextArc(radius, -delta / 2, delta / 2))
+    .path(Utils.makeTextArc(radius, -delta_title, delta_title))
     .fill("none")
     .stroke("none");
   const labelPathText = labelPath
@@ -269,7 +283,7 @@ function addSegments(
       Utils.makeArrowArc(
         radius,
         txtExtentDegrees / 2 + arrowPaddingDegrees,
-        delta / 2 - arrowPaddingDegrees,
+        delta_title - arrowPaddingDegrees,
       ),
     )
     .fill("none")
@@ -281,7 +295,7 @@ function addSegments(
       Utils.makeArrowArc(
         radius,
         -txtExtentDegrees / 2 - arrowPaddingDegrees,
-        -delta / 2 + arrowPaddingDegrees,
+        -delta_title + arrowPaddingDegrees,
       ),
     )
     .fill("none")
@@ -611,7 +625,34 @@ window.onload = function () {
       data.method_color = "#e13535";
       data.application_color = "#499bce";
       data.show_group_names = false;
-      data.methods = ["A-D", "E-H", "I-L", "M-P", "Q-T", "U-Z"];
+      data.methods = [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z",
+      ];
       data.applications = {
         "Physical Sciences": [
           "Applied Physics",

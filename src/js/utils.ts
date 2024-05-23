@@ -156,16 +156,10 @@ export function getMethodWeight(group: string, category: string[]) {
   let first_upper_letter_group = group_item.map((firstLetter) =>
     firstLetter[0].toUpperCase(),
   );
-  let first_upper_letter_sub_category, last_upper_letter_sub_category;
-  let method_weight = [0, 0, 0, 0, 0, 0];
+  const method_weight = new Array(category.length).fill(0);
   first_upper_letter_group.forEach(function (value) {
     for (const [i, v] of category.entries()) {
-      first_upper_letter_sub_category = v.charAt(0).toUpperCase();
-      last_upper_letter_sub_category = v.charAt(2).toUpperCase();
-      if (
-        value >= first_upper_letter_sub_category &&
-        value <= last_upper_letter_sub_category
-      ) {
+      if (value === v.charAt(0).toUpperCase()) {
         method_weight[i] = 1;
       }
     }
