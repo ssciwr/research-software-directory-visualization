@@ -12,8 +12,8 @@ importers:
         specifier: 3.0.8
         version: 3.0.8
       '@svgdotjs/svg.js':
-        specifier: 3.2.0
-        version: 3.2.0
+        specifier: 3.2.4
+        version: 3.2.4
     devDependencies:
       chokidar:
         specifier: 3.6.0
@@ -67,8 +67,8 @@ packages:
     resolution: {integrity: sha512-YshF2YDaeRA2StyzAs5nUPrev7npQ38oWD0eTRwnsciSL2KrRPMoUw8BzjIXItb3+dccKGTX3IQOd2NFzmHkog==}
     engines: {node: '>= 0.8.0'}
 
-  '@svgdotjs/svg.js@3.2.0':
-    resolution: {integrity: sha512-Tr8p+QVP7y+QT1GBlq1Tt57IvedVH8zCPoYxdHLX0Oof3a/PqnC/tXAkVufv1JQJfsDHlH/UrjcDfgxSofqSNA==}
+  '@svgdotjs/svg.js@3.2.4':
+    resolution: {integrity: sha512-BjJ/7vWNowlX3Z8O4ywT58DqbNRyYlkk6Yz/D13aB7hGmfQTvGX4Tkgtm/ApYlu9M7lCQi15xUEidqMUmdMYwg==}
 
   '@swc/helpers@0.4.14':
     resolution: {integrity: sha512-4C7nX/dvpzB7za4Ql9K81xK3HPxCpHMgwTZVyf+9JQ6VUbn9jjZVN7/Nkdz/Ugzs2CSjqnL/UPXroiVBVHUWUw==}
@@ -1070,9 +1070,9 @@ snapshots:
 
   '@svgdotjs/svg.filter.js@3.0.8':
     dependencies:
-      '@svgdotjs/svg.js': 3.2.0
+      '@svgdotjs/svg.js': 3.2.4
 
-  '@svgdotjs/svg.js@3.2.0': {}
+  '@svgdotjs/svg.js@3.2.4': {}
 
   '@swc/helpers@0.4.14':
     dependencies:
