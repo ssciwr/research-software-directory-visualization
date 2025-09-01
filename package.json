@@ -25,8 +25,8 @@
     "npm-run-all": "4.1.5",
     "shelljs": "0.10.0",
     "svgdom": "0.1.22",
-    "ts-loader": "9.5.2",
+    "ts-loader": "9.5.4",
     "typescript": "5.9.2",
-    "webpack": "5.101.0"
+    "webpack": "5.101.3"
   }
 }
