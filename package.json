@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@svgdotjs/svg.filter.js": "3.0.9",
-    "@svgdotjs/svg.js": "3.2.4"
+    "@svgdotjs/svg.js": "3.2.5"
   },
   "devDependencies": {
     "chokidar": "4.0.3",
@@ -26,7 +26,7 @@
     "shelljs": "0.10.0",
     "svgdom": "0.1.22",
     "ts-loader": "9.5.4",
-    "typescript": "5.9.2",
-    "webpack": "5.101.3"
+    "typescript": "5.9.3",
+    "webpack": "5.102.0"
   }
 }
